@@ -7,6 +7,9 @@ const flash=require('connect-flash')
 const methodOverride = require ('method-override')
 const path = require("path");
 const multer = require("multer");
+const fs = require("fs");
+const pdf = require("pdf-parse");
+
 //FOR POSTMAN
 app.use(express.json())
 app.use(methodOverride('_method'))
@@ -45,6 +48,10 @@ app.post('/form',upload.single("file"), (req, res) => {
     console.log(req.body);
     console.log(__dirname);
     console.log(req.file.filename);
+    let dataBuffer = fs.readFileSync(path.join(__dirname, './','/uploads', req.file.filename));
+    pdf(dataBuffer).then((data) => {
+        console.log(data.text);
+    });
     let journeyLink = req.file.filename;
     res.send({result: "success"});
 })
