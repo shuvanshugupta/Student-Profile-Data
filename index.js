@@ -27,12 +27,9 @@ app.use(session({
 }))
 app.use(flash())
 
-app.get('/',(req,res)=>{
-    res.redirect('/form')
-})
-
 app.post('/form', (req, res) => {
     console.log(req.body);
+    res.send({result: "success"});
 })
 
 const PORT = process.env.PORT || 3000;
