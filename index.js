@@ -11,13 +11,13 @@ const fs = require("fs");
 const pdf = require("pdf-parse");
 const cors = require("cors");
 const profile = require('./model/profile');
-const corsOptions = {
-    origin: true,
-    optionsSuccessStatus: 200,
-    methods: 'POST, GET',
-};
+// const corsOptions = {
+//     origin: true,
+//     optionsSuccessStatus: 200,
+//     methods: 'POST',
+// };
 //FOR POSTMAN
-app.use(cors(corsOptions))
+app.use(cors())
 app.use(express.json())
 app.use(methodOverride('_method'))
 // <------------>  DATABASE   <-------------->
