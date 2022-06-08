@@ -12,9 +12,9 @@ const pdf = require("pdf-parse");
 const cors = require("cors");
 const profile = require('./model/profile');
 const corsOptions = {
-    origin: '*',
-    credentials: true,
+    origin: true,
     optionsSuccessStatus: 200,
+    methods: 'POST, GET',
 };
 //FOR POSTMAN
 app.use(cors(corsOptions))
