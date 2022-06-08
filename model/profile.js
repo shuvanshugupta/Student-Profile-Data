@@ -77,6 +77,9 @@ const profileSchema = new mongoose.Schema({
             },
             organisation: {
                 type: String,
+            },
+            feedback: {
+                type: String,
             }
         },
     ],
@@ -90,7 +93,7 @@ const profileSchema = new mongoose.Schema({
             }
         }
     ],
-    journeyLink: {
+    journey: {
         type: String,
         required: true,
     },
@@ -98,6 +101,12 @@ const profileSchema = new mongoose.Schema({
         type: String,
     },
     relDetails: {
+        type: String,
+    },
+    githubLink: {
+        type: String,
+    },
+    linkedinLink: {
         type: String,
     }
 },{collection:'Profile'})

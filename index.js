@@ -9,6 +9,7 @@ const path = require("path");
 const multer = require("multer");
 const fs = require("fs");
 const pdf = require("pdf-parse");
+const profile = require('./model/profile');
 
 //FOR POSTMAN
 app.use(express.json())
@@ -16,18 +17,18 @@ app.use(methodOverride('_method'))
 // <------------>  DATABASE   <-------------->
 require('./mongoose');
 
-const storage=multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null,path.join(__dirname ,'./','/uploads'))
-    },
-    filename:(req,file,cb)=>{
-        return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
-    }
-});
-
-const upload = multer({
-    storage:storage
-});
+// const storage=multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null,path.join(__dirname ,'./','/uploads'))
+//     },
+//     filename:(req,file,cb)=>{
+//         return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
+//     }
+// });
+//
+// const upload = multer({
+//     storage:storage
+// });
 
 //<------------->  GETTING DATA FROM POST REQUEST  <---------------->
 app.use(bodyParser.urlencoded({extended: true}));
@@ -44,15 +45,38 @@ app.use(session({
 }))
 app.use(flash())
 
-app.post('/form',upload.single("file"), (req, res) => {
+app.post('/form', async (req, res) => {
     console.log(req.body);
     console.log(__dirname);
-    console.log(req.file.filename);
-    let dataBuffer = fs.readFileSync(path.join(__dirname, './','/uploads', req.file.filename));
-    pdf(dataBuffer).then((data) => {
-        console.log(data.text);
+    // let buff = Buffer.from(req.body.file, 'base64');
+    // const fileName = Date.now().toString() + '.pdf';
+    // fs.writeFileSync(path.join(__dirname, './','/uploads', fileName), buff);
+    //
+    // // console.log(req.file.filename);
+    // // let dataBuffer = fs.readFileSync(path.join(__dirname, './','/uploads', fileName));
+    // pdf(buff).then((data) => {
+    //     console.log(data.text);
+    // });
+    const profiledata = new profile({
+        name: req.body.name,
+        rollNo: req.body.rollNo,
+        branch: req.body.branch,
+        contactNo: req.body.contactNo,
+        email: req.body.email,
+        internships: req.body.internships,
+        offers: req.body.offers,
+        currentPosition: req.body.currentPosition,
+        courses: req.body.courses,
+        achievements: req.body.achievements,
+        journey: req.body.journey,
+        goals: req.body.goals,
+        relDetails: req.body.relDetails
     });
-    let journeyLink = req.file.filename;
+    try {
+        await profiledata.save();
+    } catch(err) {
+        res.send({result: "failure", error: err});
+    }
     res.send({result: "success"});
 })
 
