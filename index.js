@@ -9,10 +9,12 @@ const path = require("path");
 const multer = require("multer");
 const fs = require("fs");
 const pdf = require("pdf-parse");
+const cors = require("cors");
 const profile = require('./model/profile');
 
 //FOR POSTMAN
 app.use(express.json())
+app.use(cors())
 app.use(methodOverride('_method'))
 // <------------>  DATABASE   <-------------->
 require('./mongoose');
