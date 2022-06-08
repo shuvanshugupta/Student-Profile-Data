@@ -11,10 +11,14 @@ const fs = require("fs");
 const pdf = require("pdf-parse");
 const cors = require("cors");
 const profile = require('./model/profile');
-
+const corsOptions = {
+    origin: '*',
+    credentials: true,
+    optionsSuccessStatus: 200,
+};
 //FOR POSTMAN
+app.use(cors(corsOptions))
 app.use(express.json())
-app.use(cors())
 app.use(methodOverride('_method'))
 // <------------>  DATABASE   <-------------->
 require('./mongoose');
