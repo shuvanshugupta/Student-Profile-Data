@@ -108,6 +108,15 @@ const profileSchema = new mongoose.Schema({
     },
     linkedinLink: {
         type: String,
+    },
+    resumeLink: {
+        type: String,
+    },
+    collegeGithubLink: {
+        type: String,
+    },
+    batch: {
+        type: String,
     }
 },{collection:'Profile'})
 

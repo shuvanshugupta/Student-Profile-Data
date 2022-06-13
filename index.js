@@ -64,6 +64,7 @@ app.post('/form', async (req, res) => {
     //     console.log(data.text);
     // });
     const profiledata = new profile({
+        batch: req.body.batch,
         name: req.body.name,
         rollNo: req.body.rollNo,
         branch: req.body.branch,
@@ -76,7 +77,11 @@ app.post('/form', async (req, res) => {
         achievements: req.body.achievements,
         journey: req.body.journey,
         goals: req.body.goals,
-        relDetails: req.body.relDetails
+        relDetails: req.body.relDetails,
+        githubLink: req.body.githubLink,
+        linkedinLink: req.body.linkedinLink,
+        resumeLink: req.body.resumeLink,
+        collegeGithubLink: req.body.collegeGithubLink,
     });
     try {
         await profiledata.save();
